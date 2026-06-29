@@ -9,6 +9,7 @@ import PopularMovies from '../Pages/PopularMovies'
 import HerorSection from '../Pages/HerorSection'
 import BollyWoodMovies from '../Pages/BollyWoodMovies'
 import TopTVShow from '../Pages/TopTVShow'
+import Top10Movies from '../Pages/Top10Movies'
 
 
 
@@ -19,6 +20,9 @@ const Home = () => {
 <div className='min-h-screen  min-w-screen bg-black text-white  '>
   <div className='bg-black p-4' >
     <HerorSection />
+  </div>
+  <div className='mt-8 bg-black p-4'>
+    <Top10Movies />
   </div>
   <div className='mt-8 bg-black p-4'>
     <TrendingMovie />
