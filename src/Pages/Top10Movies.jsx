@@ -27,18 +27,25 @@ useEffect(() => {
           trendingMovies.map((movie, index) => (
             <div 
             key={movie.id}
-            className='relative min-w-[180px]  '
+            className='relative min-w-[320px] group'
             >
             <span
               className='absolute -left-5 bottom-0 text-[130px] font-extrabold text-white opacity-80 leading-none [-webkit-text-stroke:2px_black] z-0   '
               >{index+1}</span>
+              
               <img 
-              className='w-[180] h-72 object-cover rounded-lg'
+              className='w-[320px] h-48 object-cover  rounded-lg'
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+              <div className='absolute inset-0 bg-black/70 flex items-end justify-center just p-3 opacity-0  group-hover:opacity-100 transition duration-300'>
               <h2
               className='text-white mt-2 truncate'
               >{movie.title}</h2>
-            </div>
+              </div>
+              </div>
+                
+              
+              
+            
           ))
         }
       </div>
