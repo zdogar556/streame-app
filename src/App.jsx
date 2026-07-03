@@ -6,6 +6,7 @@ import Movies from './components/Movies'
 import TVShow from './components/TVShow'
 import LiveSports from './components/LiveSports'
 import MyList from './components/MyList'
+import LiveMatchPayer from './Pages/LiveMatchPlayer'
 
 
 
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/tv-shows" element={<TVShow />} />
         <Route path="/sports" element={<LiveSports />} />
         <Route path="/mylist" element={<MyList />} />
+        <Route path="/sports/:id" element={<LiveMatchPayer />} />
       </Routes>
     </BrowserRouter>
   )

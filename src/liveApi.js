@@ -5,5 +5,10 @@ const liveApi = axios.create({
 });
 
 export const getLiveMatches = () => {
-  return liveApi.get("/matches/live/popular");
+  return liveApi.get("/matches/all");
+};
+
+export const getMatchStream=(source,id)=>{
+    return liveApi.get(`/stream/${source}/${id}`);
+
 };
