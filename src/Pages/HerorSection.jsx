@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getTrendingMovies } from '../movieApi'
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const HerorSection = () => {
     const [movies, setMovies] = useState([]);
@@ -47,18 +48,22 @@ const movie=movies[currentIndex];
             }}
           >
             <div className="w-full h-full bg-black bg-opacity-50 flex justify-between  ">
-              <div className="w-1/2 p-8 mt-60 ">
-                <h1 className="text-3xl font-bold text-white mt-3">{movie.title}</h1>
-              <p className="text-gray-300 mt-4">{movie.overview}</p>
+              <div className="w-1/2 p-8 mt-60 mb-2 ">
+              <span
+              
+              className="text-md font-semibold text-red-500">★ Trending #{currentIndex+1}</span>
+                <h1 className="text-2xl font-bold text-white mt-2">{movie.title}</h1>
+              <p className="text-gray-300 mt-2">{movie.overview}</p>
               <div className="flex gap-4 mt-4 text-white">
                 <button className="bg-red-700 px-4 py-2 rounded-full w-48" >Watch</button> 
                 <button className='bg-black px-2 rounded-full' >More Info</button>
                 <button className='bg-gray-600 px-2 rounded-full'>i More Info</button>
-              </div>
-              
+              </div>              
               </div>
                {/* Indicators */}
-        <div className="flex gap-2 mt-8 mr-2 w-48 ">
+               <div
+               className="w-1/2 flex flex-col items-end  ">
+                <div className="flex gap-2 mt-8 mr-2 w-48 h-96 ">
           {movies.map((_, index) => (
             <button
               key={index}
@@ -71,6 +76,21 @@ const movie=movies[currentIndex];
             />
           ))}
         </div>
+        <div className="flex gap-2 justify-end mr-4 w-48 mb-8 ">
+          <button
+          className="w-16 h-16 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+          onClick={()=> setCurrentIndex((prev)=>(prev-1 +movies.length)% movies.length)}
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+          className="w-16 h-16 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+          onClick={()=> setCurrentIndex((prev)=>(prev+1)% movies.length)}
+          >
+            <FaChevronRight />
+            </button>
+        </div>
+               </div>
             </div>
           </div>
 
