@@ -42,7 +42,7 @@ const movie=movies[currentIndex];
   return (
           <div
             key={movie.id}
-            className=" w-full h-[400px] md:h-[500px] lg:h-[650px]  bg-cover bg-center rounded-xl  "
+            className=" w-full h-[400px] md:h-[500px] lg:h-[650px]  bg-cover bg-center rounded-xl mt-3  "
             style={{
               backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`
             }}

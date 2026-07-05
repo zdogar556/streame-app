@@ -15,16 +15,20 @@ const Navbar = () => {
 
   return (
 
-    <nav className="bg-black text-white px-8 py-4 flex items-center justify-between ">
+    <nav 
+    className="  bg-black text-white px-8 py-4 flex items-center justify-between ">
 
       {/* Logo */}
-      <h1 className="text-3xl font-bold text-White-600">
-        Streame <span className="text-red-500">ZD</span>
+      <h1 
+      className="text-3xl font-bold text-White-600">
+        Streame <span 
+        className="text-red-500">ZD</span>
       </h1>
 
 
       {/* Links */}
-      <div className="flex gap-8">
+      <div 
+      className="flex gap-8">
 
         {
           links.map((link)=>(
