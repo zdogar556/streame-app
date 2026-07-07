@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { getTopRatedMovies } from '../movieApi'
 import { useEffect } from 'react'
+import MovieModal from './MovieModal'
 
 const TopRatedMovie = () => {
     const [movies, setMovies] = useState([]);
