@@ -18,11 +18,11 @@ useEffect(() => {
   }, []);
 
   return (
-    <div className='min-h-screen  min-w-screen bg-black text-white px-2 ' >
+    <div className='min-h-screen  min-w-screen bg-black text-white px-2  ' >
       <h1 className='text-2xl font-bold p-4 '>
         Live Matches
       </h1>
-      <div className=' flex flex-wrap  gap-4 mt-4 '>
+      <div className=' flex flex-wrap  gap-6  p-6 '>
         {
         matches.map((match) => (   
         <Link
