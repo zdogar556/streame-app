@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { getTrendingMovies } from '../movieApi';
+import MovieModal from './MovieModal';
 
 const TrendingMovie = () => {
 const [movies, setMovies] = useState([]);
+const [selectedMovie, setSelectedMovie] = useState(null);
+const [isOpen, setIsOpen] = useState(false);
 useEffect(() => {
     getTrendingMovies()
       .then((res) => {
@@ -26,6 +29,11 @@ useEffect(() => {
              group relative  overflow-hidden cursor-pointer transition-all duration-300 
              hover:min-w-[260px]
              hover:-translate-y-8 hover:z-50   '
+             onClick={()=>{
+              setSelectedMovie(movie.id)
+              setIsOpen(true)
+             }
+              }
             >
               <img 
               className='w-[180px] h-72 object-cover rounded-xl group-hover:rounded-xl transition-all duration-300 group-hover:w-[260px] group-hover:h-[380px]'
@@ -63,6 +71,7 @@ useEffect(() => {
           ))
         }
       </div>
+      <MovieModal movieId={selectedMovie} isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   )
 }
