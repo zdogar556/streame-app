@@ -2,9 +2,12 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getPopularMovies, getTopRatedMovies } from '../movieApi'
+import MovieModal from './MovieModal'
 
 const InTheaters = () => {
     const [movies, setMovies] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 useEffect(() => {
 
     getPopularMovies()
@@ -39,7 +42,11 @@ useEffect(() => {
           movies.map((movie) => (
             <div 
             key={movie.id}
-            className='min-w-[180px] '
+            className='min-w-[180px] cursor-pointer '
+            onClick={() => {
+              setSelectedMovie(movie.id);
+              setIsOpen(true);
+            }}
             >
               <img 
               className='w-[180] h-72 object-cover rounded-xl'
@@ -54,6 +61,7 @@ useEffect(() => {
           ))
         }
       </div>
+      <MovieModal movieId={selectedMovie} isOpen={isOpen} onClose={() => setIsOpen(false)} /> 
     </div>
   )
 }
