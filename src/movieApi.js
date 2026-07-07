@@ -74,3 +74,11 @@ export const getPopularTVShows = ()=>{
   )
   
   }
+
+export const getMovieDetails = (id) => {
+  return api.get(`/movie/${id}?api_key=${KEY}`);
+};
+
+export const getMovieCredits = (id) => {
+  return api.get(`/movie/${id}/credits?api_key=${KEY}`);
+};
