@@ -11,6 +11,9 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
   useEffect(() => {
     if (!isOpen) return;
 
+    setMovie(null);
+    setCast([]);
+
     // Get Movie Details
     getMovieDetails(movieId)
       .then((res) => {
