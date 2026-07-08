@@ -12,7 +12,7 @@ const Navbar = () => {
     {name:"Movies", path:"/movies"},
     {name:"TV Shows", path:"/tv-shows"},
     {name:"Live Sports", path:"/sports"},
-    {name:"My List", path:"/my-list"},
+    {name:"My List", path:"/mylist"},
   ];
 
 
