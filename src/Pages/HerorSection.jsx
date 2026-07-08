@@ -86,7 +86,7 @@ const movie=movies[currentIndex];
                   </button>
                 <button 
                 className='bg-gray-600 px-6  py-3 rounded-full'>
-                  i More Info
+                  + My List
                   </button>
               </div>              
               </div>
