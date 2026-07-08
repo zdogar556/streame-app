@@ -3,10 +3,14 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getTrendingMovies } from '../movieApi'
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import MovieModal from './MovieModal'
 
 const HerorSection = () => {
     const [movies, setMovies] = useState([]);
     const [currentIndex,setCurrentIndex] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedMovie, setSelectedMovie] = useState(null);
+
   useEffect(() => {
     getTrendingMovies()
       .then((res) => {
@@ -70,7 +74,14 @@ const movie=movies[currentIndex];
                   Watch
                   </button> 
                 <button
-                 className='bg-black px-6  py-3 rounded-full' >
+                key={movie.id}
+                 className='bg-black px-6  py-3 rounded-full'
+                 onClick={()=>{
+                  setSelectedMovie(movie.id);
+                  setIsOpen(true);
+                 }}
+                 
+                 >
                   More Info
                   </button>
                 <button 
@@ -114,6 +125,7 @@ const movie=movies[currentIndex];
         </div>
                </div>
             </div>
+            <MovieModal movieId={selectedMovie} isOpen={isOpen} onClose={() => setIsOpen(false)} />
           </div>
 
 
