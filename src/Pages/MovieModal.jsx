@@ -58,8 +58,12 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
                 className="w-full h-72 object-cover"
               />
               <div className="absolute bottom-4 left-4 flex gap-2">
-                 <button className="bg-red-600 w-12 h-12 px-3 py-2 rounded-full" ><Play /></button>
-                 <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" ><Plus /></button>
+                 <button
+                  className="bg-red-600 w-12 h-12 px-3 py-2 rounded-full" >
+                  <Play className=" fill-white stroke-white"  />
+                  </button>
+                 <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
+                  <Plus /></button>
               </div>
               <button
                 className="absolute top-4 right-4 bg-black p-2 rounded-full"
