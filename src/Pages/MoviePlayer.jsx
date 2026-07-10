@@ -1,8 +1,9 @@
 import React from 'react'
 
 const MoviePlayer = () => {
+
   return (
-    <div className='bg-black w-full h-screen text-white '>
+    <div className='min-h-screen  min-w-screen bg-black text-white p-2 '>
       Movie Player
     </div>
   )
