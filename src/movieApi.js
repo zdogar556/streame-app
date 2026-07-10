@@ -48,6 +48,19 @@ export const getHollywoodMovies = ()=>{
   
   }
 
+// Movie Details
+export const getMovieDetails = (id) => {
+  return api.get(`/movie/${id}?api_key=${KEY}`);
+};
+// Movie Credits
+export const getMovieCredits = (id) => {
+  return api.get(`/movie/${id}/credits?api_key=${KEY}`);
+};
+// Movie Images
+export const getMovieImages=(id) => {
+  return api.get(`/movie/${id}/images?api_key=${KEY}`);
+};
+
 // Top Rated TV Shows
 export const getTopTVShows = ()=>{
 
@@ -75,13 +88,3 @@ export const getPopularTVShows = ()=>{
   
   }
 
-export const getMovieDetails = (id) => {
-  return api.get(`/movie/${id}?api_key=${KEY}`);
-};
-
-export const getMovieCredits = (id) => {
-  return api.get(`/movie/${id}/credits?api_key=${KEY}`);
-};
-export const getMovieImages=(id) => {
-  return api.get(`/movie/${id}/images?api_key=${KEY}`);
-};
