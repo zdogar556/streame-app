@@ -82,3 +82,6 @@ export const getMovieDetails = (id) => {
 export const getMovieCredits = (id) => {
   return api.get(`/movie/${id}/credits?api_key=${KEY}`);
 };
+export const getMovieImages=(id) => {
+  return api.get(`/movie/${id}/images?api_key=${KEY}`);
+};

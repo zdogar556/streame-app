@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import {Play} from "lucide-react";
 import { Plus } from "lucide-react";
-import { getMovieDetails, getMovieCredits } from "../movieApi";
+import { getMovieDetails, getMovieCredits, getMovieImages } from "../movieApi";
 
 const MovieModal = ({ movieId, isOpen, onClose }) => {
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -33,6 +34,16 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
       .catch((error) => {
         console.log(error);
       });
+
+      // Get Movie Images
+      getMovieImages(movieId)
+      .then((res)=>{
+        console.log("images", res.data.backdrops);
+        setImages(res.data);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
 
   }, [movieId, isOpen]);
 
@@ -134,9 +145,28 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
                       {actor.character}
                     </p>
                   </div>
-                ))}
+                ))}  
               </div>
-            </div>
+              {/* Images */}
+                <h2 className="text-2xl font-bold mt-8 mb-4">Images</h2>
+                <div className="flex gap-4  overflow-x-auto scrollbar-hide">
+                  {
+                  images.backdrops.map((image) => (
+                    <div 
+                    key={image.file_path}
+                    className="min-w-[220px] h-36 mb-2  bg-gray-900 border border-gray-800 rounded-xl hover:border-red-600"
+                    >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                      alt={movie.title}
+                      className="w-full h-24 object-cover rounded-lg mt-4 mb-2"
+                    />
+                    </div>
+                    
+                  ))
+                }
+                </div>
+                </div>
           </>
         )}
       </div>
