@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import {Play} from "lucide-react";
 import { Plus } from "lucide-react";
-import { getMovieDetails, getMovieCredits, getMovieImages } from "../movieApi";
+import { getMovieDetails, getMovieCredits, getMovieImages , getMovieVideos } from "../movieApi";
 
 const MovieModal = ({ movieId, isOpen, onClose }) => {
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
   const [images, setImages] = useState([]);
+  const [trailer, setTrailer] = useState(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -43,7 +44,20 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
       })
       .catch((error)=>{
         console.log(error);
+      });
+
+      // Get Movie Trailer
+      getMovieVideos(movieId)
+      .then((res) => {
+      // console.log( "videos",  res.data.results);
+      const trailer = res.data.results.find(
+      (video) => video.site === "YouTube" && video.type === "Trailer"
+       );
+      setTrailer(trailer);
       })
+      .catch((error)=>{
+        console.log(error);
+      });
 
   }, [movieId, isOpen]);
 
@@ -147,6 +161,23 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
                   </div>
                 ))}  
               </div>
+              {/* {trailer  */}
+              <h2>Trailer</h2>
+              <div>
+                {trailer && (
+                  <iframe
+                   width="100%"
+                     height="315"
+                    src={`https://www.youtube.com/embed/${trailer.key}`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                  )}
+              </div>
+
+
               {/* Images */}
                 <h2 className="text-2xl font-bold mt-8 mb-4">Images</h2>
                 <div className="flex gap-4  overflow-x-auto scrollbar-hide">
