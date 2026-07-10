@@ -3,12 +3,16 @@ import { X } from "lucide-react";
 import {Play} from "lucide-react";
 import { Plus } from "lucide-react";
 import { getMovieDetails, getMovieCredits, getMovieImages , getMovieVideos } from "../movieApi";
+import { useNavigate } from "react-router-dom";
 
 const MovieModal = ({ movieId, isOpen, onClose }) => {
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
   const [images, setImages] = useState([]);
   const [trailer, setTrailer] = useState(null);
+
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (!isOpen) return;
@@ -84,8 +88,10 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
               />
               <div className="absolute bottom-4 left-4 flex gap-2">
                  <button
+                 onClick={()=>navigate(`/watch/movie/${movieId}`)}
                   className="bg-red-600 w-12 h-12 px-3 py-2 rounded-full" >
-                  <Play className=" fill-white stroke-white"  />
+                  <Play 
+                  className=" fill-white stroke-white"  />
                   </button>
                  <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
                   <Plus /></button>

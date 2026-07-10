@@ -65,6 +65,18 @@ export const getMovieVideos=(id) => {
   return api.get(`/movie/${id}/videos?api_key=${KEY}`);
 };
 
+
+// watch Provider
+export const getMovieWatchProviders=(id) => {
+  return api.get(`/movie/${id}/watch/providers?api_key=${KEY}`);
+};
+
+
+
+
+
+
+
 // Top Rated TV Shows
 export const getTopTVShows = ()=>{
 
