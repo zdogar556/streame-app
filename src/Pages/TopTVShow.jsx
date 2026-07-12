@@ -44,10 +44,10 @@ const TopTVShow = () => {
         ))
       }
         </div>
-      <TVShowModal
-  tvShowId={selectTvShow?.id }
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
+      <TVShowModal  
+      tvShowId={selectTvShow?.id }  
+      isOpen={isOpen}  
+      onClose={() => setIsOpen(false)}
 />
     </div>
   )
