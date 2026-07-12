@@ -103,4 +103,21 @@ export const getPopularTVShows = ()=>{
   )
   
   }
+ 
+// TV Details
+export const getTVDetails = (id) => {
+  return api.get(`/tv/${id}?api_key=${KEY}`);
+};
+// TV Credits
+export const getTVCredits = (id) => {
+  return api.get(`/tv/${id}/credits?api_key=${KEY}`);
+};
+// TV Images
+export const getTVImages=(id) => {
+  return api.get(`/tv/${id}/images?api_key=${KEY}`);
+};
+// TV Videos
+export const getTVVideos=(id) => {
+  return api.get(`/tv/${id}/videos?api_key=${KEY}`);
+};
 
