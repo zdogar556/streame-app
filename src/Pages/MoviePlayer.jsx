@@ -8,7 +8,7 @@ const MoviePlayer = () => {
   const { id } = useParams();
 
   const [moiveProvider, setMoiveProvider] = useState([]);
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
 
   const servers = [
@@ -54,6 +54,14 @@ const [currentServer, setCurrentServer] = useState(servers[0])
 
   },[id])
 
+  if (!movie) {
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      Loading...
+    </div>
+  );
+}
+
   return (
     <div className='min-h-screen  min-w-screen bg-black text-white p-2 '>
 
@@ -77,7 +85,7 @@ const [currentServer, setCurrentServer] = useState(servers[0])
     </button>
       ))}
       </div>
-      
+
       <div>
         <h1 className="text-3xl font-bold">{movie.title}</h1>
               <p>{movie.tagline}</p>
@@ -100,7 +108,7 @@ const [currentServer, setCurrentServer] = useState(servers[0])
 
               {/* Genres */}
               <div className="flex gap-2 flex-wrap mt-5">
-                {movie.genres.map((genre) => (
+                {movie.genres?.map((genre) => (
                   <span
                     key={genre.id}
                     className="bg-gray-800 px-3 py-1 rounded-full"
