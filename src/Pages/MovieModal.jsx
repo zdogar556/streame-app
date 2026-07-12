@@ -19,6 +19,8 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
 
     setMovie(null);
     setCast([]);
+    setImages([]);
+    setTrailer(null);
 
     // Get Movie Details
     getMovieDetails(movieId)
