@@ -19,30 +19,43 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
     setImages([]);
     setTrailer(null);
 
+    // Get TVShow Details
     getTVDetails(tvShowId)
     .then((res) => {
-      console.log(res.data);
+      
       setTvShow(res.data);
     })
     .catch((error) => {
       console.log(error);
     })
+
+    // Get TVShow Cast
     getTVCredits(tvShowId)
     .then((res) => {
+
       setCast(res.data.cast);
     })
     .catch((error) => {
       console.log(error);
     })
+
+    // get TVShow Images
+
     getTVImages(tvShowId)
     .then((res) => {
+      console.log("TV Show Images",res.data.backdrops);
       setImages(res.data.backdrops);
     })
     .catch((error) => {
       console.log(error);
     })
+
+    // get TVShow Videos
+
+
     getTVVideos(tvShowId)
     .then((res) => {
+      console.log("TVShow Vedio",res.data.results);
       const trailer = res.data.results.find((video) => video.type === "Trailer");
       setTrailer(trailer);
     })
@@ -68,7 +81,7 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
             <img
               src={`https://image.tmdb.org/t/p/original/${tvShow.backdrop_path}`}
               alt={tvShow.name}
-              className="w-full"
+              className="w-full h-72 object-cover"
             />
               <div className="absolute bottom-4 left-4 flex gap-2">
                     <button
@@ -87,28 +100,118 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
                     </button>
 
           </div>
-            
-
-
+    
             <div className="p-8">
               <h1 className="text-3xl font-bold">{tvShow.name}</h1>
+
+              {/* Details */}
+              <div className="flex gap-4 mt-3 text-gray-400"> 
+                <p className="text-red-500 font-semibold">
+                {Math.round(tvShow.vote_average * 10) }% Match
+              </p>
+              <p>
+                  {tvShow.first_air_date
+                    ? new Date(tvShow.first_air_date).getFullYear()
+                    : "N/A"}
+                </p>
+
+                <p>
+                  {tvShow.number_of_seasons} Seasons
+                  
+                  </p>
+                <p>
+                  
+                  {tvShow.number_of_episodes} Episodes
+                  </p>
+              </div>
+
+              
+              {/* Genres */}
+              <div className="flex gap-2 flex-wrap mt-2">
+                {
+                tvShow.genres.map((genre) => (
+                  <span key={genre.id}
+                  className="bg-gray-800 px-3 py-1 rounded-full"
+                  >{genre.name}</span>
+                ))
+                }
+              </div>
+
+              {/* Production Companies */}
+              <div  className="flex gap-2 flex-wrap mt-2">
+                {
+                tvShow.production_companies.map((company) => (
+                  <div
+                  key={company.id}>
+                    <img src={`https://image.tmdb.org/t/p/w500/${company.logo_path}`} alt={company.name} 
+                    className='w-20 h-16 rounded-xl'
+                    />
+                  </div>
+                ))
+                }
+              </div>
               <p className="mt-4">{tvShow.overview}</p>
+
+                {/* Cast */}
               <div className="mt-4">
                 <h2 className="text-xl font-bold">Cast</h2>
-                <div className="flex gap-2">
+
+                <div className="flex gap-4 overflow-x-auto scrollbar-hide  ">
                   {cast.map((actor) => (
-                    <div key={actor.id}>
+                    <div key={actor.id}
+                    className="min-w-[120px]"
+                    >
                       <img
-                        src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
-                        alt={actor.name}
-                        className="w-16 h-16 rounded-full"
+                        src={
+                        actor.profile_path
+                          ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                          : "https://via.placeholder.com/185x278?text=No+Image"
+                      }
+                      alt={actor.name}
+                        className="w-full h-40 object-cover rounded-lg"
                       />
                       <div className="mt-2">{actor.name}</div>
                     </div>
                   ))}
                 </div>
+
+                
+                {/* trailer */}
+                  <h2 className="text-2xl font-bold mt-8 mb-4">Vedio</h2>
+                  <div>
+                {trailer && (
+                  <iframe
+                   width="100%"
+                     height="315"
+                    src={`https://www.youtube.com/embed/${trailer.key}`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                  )}
+              
+
+              {/* images */}
+            
+                <h2 className="text-2xl font-bold mt-8 mb-4">Images</h2>
+                <div className="flex gap-4  overflow-x-auto scrollbar-hide">
+                  {images.map((image) => (
+                    <img
+                      key={image.file_path}
+                      src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                      alt={image.file_path}
+                      className="w-full h-40 object-cover rounded-lg"
+                    />
+                  ))}
+                </div>
+              
+
+                </div>
               </div>
             </div>
+
+            
           </>
         )
           
