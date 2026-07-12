@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { getTVDetails, getTVCredits, getTVImages, getTVVideos } from '../movieApi'
+import { X } from "lucide-react";
+import {Play} from "lucide-react";
+import { Plus } from "lucide-react";
+
 
 const TvShowModal = ({tvShowId , isOpen, onClose}) => {
   const [tvShow, setTvShow] = useState(null);
@@ -60,11 +64,32 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
       >
         {tvShow && (
           <>
+          <div className="relative">
             <img
               src={`https://image.tmdb.org/t/p/original/${tvShow.backdrop_path}`}
               alt={tvShow.name}
               className="w-full"
             />
+              <div className="absolute bottom-4 left-4 flex gap-2">
+                    <button
+                    className="bg-red-600 w-12 h-12 px-3 py-2 rounded-full" >
+                    <Play 
+                    className=" fill-white stroke-white"  />
+                    </button>
+                    <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
+                    <Plus /></button>
+                    </div>
+                    <button
+                    className="absolute top-4 right-4 bg-black p-2 rounded-full"
+                    onClick={onClose}
+                    >
+                    <X />
+                    </button>
+
+          </div>
+            
+
+
             <div className="p-8">
               <h1 className="text-3xl font-bold">{tvShow.name}</h1>
               <p className="mt-4">{tvShow.overview}</p>
