@@ -2,9 +2,12 @@ import React, { useEffect } from 'react'
 import { useState, } from 'react'
 import {usEffect} from 'react'
 import { getTrendingTVShows } from '../movieApi'
+import TVShowModal from './TvShowModal'
 
 const TrendingTVShow = () => {
     const [trendingTVShow, setTrendingTVShow] = useState([]);
+    const [selectTvShow, setSelectTvShow] = useState(null);
+    const [isOpen, setIsOpen] = useState(false)
     useEffect(() => {
         getTrendingTVShows()
           .then((res) => {
@@ -22,7 +25,12 @@ const TrendingTVShow = () => {
          {
         trendingTVShow.map((tvShow) => (
           <div className='min-w-[180px]'
-           key={tvShow.id}>
+           key={tvShow.id}
+          onClick={() => {
+          setIsOpen(true);
+          setSelectTvShow(tvShow);
+            }}
+           >
             <img
             className='w-[180] h-72 object-cover rounded-xl'
             src={`https://image.tmdb.org/t/p/w500/${tvShow.poster_path}`} alt={tvShow.title} />
@@ -32,7 +40,7 @@ const TrendingTVShow = () => {
         ))
       }
         </div>
-      
+      <TVShowModal tvShowId={selectTvShow?.id }isOpen={isOpen} onClose={() => setIsOpen(false)}/>
     </div>
   )
 }
