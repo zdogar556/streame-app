@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { getPopularTVShows } from '../movieApi'
+import TVShowModal from './TvShowModal'
 
 
 const PopulatTVShow = () => {
     const [popularTVShows, setPopularTVShows] = useState([]);
+    const [selectTvShow, setSelectTvShow] = useState(null);
+    const [isOpen, setIsOpen] = useState(false)
+
+
     useEffect(() => {
         getPopularTVShows()
         .then((res) => {
@@ -24,7 +29,12 @@ const PopulatTVShow = () => {
          {
         popularTVShows.map((tvShow) => (
           <div className='min-w-[180px]'
-           key={tvShow.id}>
+           key={tvShow.id}
+           onClick={() => {
+          setIsOpen(true);
+          setSelectTvShow(tvShow);
+            }}
+           >
             <img
             className='w-[180] h-72 object-cover rounded-xl'
             src={`https://image.tmdb.org/t/p/w500/${tvShow.poster_path}`} alt={tvShow.title} />
@@ -34,7 +44,7 @@ const PopulatTVShow = () => {
         ))
       }
         </div>
-      
+      <TVShowModal tvShowId={selectTvShow?.id }isOpen={isOpen} onClose={() => setIsOpen(false)}/>
     </div>
   )
 }
