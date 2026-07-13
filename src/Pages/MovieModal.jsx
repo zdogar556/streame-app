@@ -46,7 +46,7 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
       getMovieImages(movieId)
       .then((res)=>{
         console.log("images", res.data.backdrops);
-        setImages(res.data);
+        setImages(res.data.backdrops);
       })
       .catch((error)=>{
         console.log(error);
@@ -190,7 +190,7 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
                 <h2 className="text-2xl font-bold mt-8 mb-4">Images</h2>
                 <div className="flex gap-4  overflow-x-auto scrollbar-hide">
                   {
-                  images.backdrops.map((image) => (
+                  images.map((image) => (
                     <div 
                     key={image.file_path}
                     className="min-w-[220px] h-36 mb-2  bg-gray-900 border border-gray-800 rounded-xl hover:border-red-600"
