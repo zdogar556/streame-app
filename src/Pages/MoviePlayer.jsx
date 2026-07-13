@@ -17,6 +17,44 @@ const MoviePlayer = () => {
     name: "CinemaOS (Multi - no ads)",
     url: `https://cinemaos.live/movie/watch/${id}`
   },
+  {
+    id: "cinextream",
+    name: "Cinextream (Multi - no ads)",
+    url: `https://cinextream.net/api/embed/movie/${id}`
+
+  },
+  {
+    id: "vidfast",
+    name: "vidfast (Multi - no ads)",
+    url: `https://vidfast.vc/movie/${id}`
+  },
+  {
+    id: "yapgrid",
+    name: "yapgrid (Multi - no ads)",
+    url: `https://yapgrid.com/embed/movie/${id}?autoplay=1`
+  },
+  {
+    id:"cinesrc",
+    name: "CineSrc (Multi-ads)",
+    url: `https://cinesrc.st/embed/movie/${id}`
+
+  },
+
+  {
+    id :"peachify",
+    name: "Peachify (Multi-ads)",
+    url: `https://peachify.pro/embed/movie/${id}`
+  },
+  {
+    id:"embedmaster",
+    name: "EmbedMaster (Multi-ads)",
+    url: `https://embedmaster.link/movie/${id}`
+  },
+  {
+    id:"vidking",
+    name: "VidKing (Multi-ads)",
+    url: `https://www.vidking.net/embed/movie/${id}`
+  }
 
 ];
 const [currentServer, setCurrentServer] = useState(servers[0])
@@ -76,17 +114,26 @@ const [currentServer, setCurrentServer] = useState(servers[0])
       allowFullScreen
       />
 
-      {servers.map((server) => (
+      </div>
+
+      
+        {servers.map((server) => (
+      
       <button
+      className='flex flex-col mt-3 w-full justify-start items-start px-3 py-2 bg-gray-800' 
+      
       key={server.id}
-      onClick={() => setCurrentServer(server)}
+      onClick={() => setCurrentServer(server)
+      
+      }
        >
       {server.name}
     </button>
       ))}
-      </div>
 
-      <div>
+    
+
+      <div className="mt-8">
         <h1 className="text-3xl font-bold">{movie.title}</h1>
               <p>{movie.tagline}</p>
 
