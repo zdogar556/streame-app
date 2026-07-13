@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getMovieWatchProviders, getMovieDetails, getMovieCredits, getMovieImages } from '../movieApi'
 
 const MoviePlayer = () => {
 
   const { id } = useParams();
+  const navigate=useNavigate();
 
   const [moiveProvider, setMoiveProvider] = useState([]);
   const [movie, setMovie] = useState(null);
@@ -102,6 +104,17 @@ const [currentServer, setCurrentServer] = useState(servers[0])
 
   return (
     <div className='min-h-screen  min-w-screen bg-black text-white p-2 '>
+
+      <div>
+      <button className='text-gray-400'
+      onClick={()=>{
+        navigate("/movies")
+      }}
+      >
+       ← Back to Movies
+      </button>
+      </div>
+
 
       <div>
         
