@@ -5,9 +5,11 @@ import Home from './components/Home'
 import Movies from './components/Movies'
 import MoivePlayer from './Pages/MoviePlayer'
 import TVShow from './components/TVShow'
+import TvShowPlayer from './Pages/TvShowPlayer'
 import LiveSports from './components/LiveSports'
 import MyList from './components/MyList'
 import LiveMatchPayer from './Pages/LiveMatchPlayer'
+
 
 
 
@@ -22,6 +24,7 @@ const App = () => {
         <Route path="/movies" element={<Movies />} />
         <Route path="/watch/movie/:id" element={<MoivePlayer />} />
         <Route path="/tv-shows" element={<TVShow />} />
+        <Route path="/watch/tv-show/:id" element={<TvShowPlayer />} />
         <Route path="/sports" element={<LiveSports />} />
         <Route path="/mylist" element={<MyList />} />
         <Route path="/sports/:id" element={<LiveMatchPayer />} />

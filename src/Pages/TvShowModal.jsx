@@ -4,6 +4,7 @@ import { getTVDetails, getTVCredits, getTVImages, getTVVideos } from '../movieAp
 import { X } from "lucide-react";
 import {Play} from "lucide-react";
 import { Plus } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 
 const TvShowModal = ({tvShowId , isOpen, onClose}) => {
@@ -11,6 +12,8 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
   const [cast , setCast] = useState([]);
   const [images , setImages] = useState([]);
   const [trailer , setTrailer] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(!isOpen) return;
@@ -85,6 +88,9 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
             />
               <div className="absolute bottom-4 left-4 flex gap-2">
                     <button
+                    onClick={()=>{
+                      navigate(`/watch/tv-show/${tvShowId}`);
+                    }}
                     className="bg-red-600 w-12 h-12 px-3 py-2 rounded-full" >
                     <Play 
                     className=" fill-white stroke-white"  />
