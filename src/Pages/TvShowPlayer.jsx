@@ -7,11 +7,55 @@ import { getTVDetails, getTVCredits } from '../movieApi'
 const TvShowPlayer = () => {
 
     const { id } = useParams();
+    const { season } = useParams();
+    const { episode } = useParams();
+
     const navigate=useNavigate();
 
     const [tvShow, setTvShow] = useState(null);
     const [cast , setCast] = useState([]);
     const [images , setImages] = useState([]);
+
+    const servers=[
+        {
+            id: "cinemaos",
+            name: "CinemaOS (Multi - no ads)",
+            url: `https://cinemaos.live/tv/watch/${id}`
+        },
+        {
+            id:"vidfast",
+            name:"vidfast (Multi - no ads)",
+            url:`https://vidfast.vc/tv/${id}`
+        },
+        {
+            id:"yapgrid",
+            name:"yapgrid (Multi - no ads)",
+            url:`https://yapgrid.com/embed/tv/${id}?autoplay=1`
+        },
+        {
+            id:"cinesrc",
+            name: "CineSrc (Multi-ads)",
+            url: `https://cinesrc.st/embed/tv/${id}`
+        },
+        {
+            id :"peachify",
+            name: "Peachify (Multi-ads)",
+            url: `https://peachify.pro/embed/tv/${id}`
+        },
+        {
+            id:"embedmaster",
+            name: "EmbedMaster (Multi-ads)",
+            url: `https://embedmaster.link/tv/${id}`
+         },
+        {
+            id:"vidking",
+            name: "VidKing (Multi-ads)",
+            url: `https://www.vidking.net/embed/tv/${id}`
+        },
+        
+    ]
+
+    const [currentServer,setCurrentServer]=useState(servers[0]);
 
     useEffect(() => {
         getTVDetails(id)
@@ -45,10 +89,38 @@ const TvShowPlayer = () => {
 
 
       <div>
-        <h1>{tvShow?.name}</h1>
-        <p>{tvShow?.overview}</p>
+    <iframe
+      src={currentServer.url}
+      width="100%"
+      height="600"
+      allowFullScreen
+      />
+      <div>
+        
       </div>
-      {/* details */}
+
+      </div>
+
+      
+      <div 
+      className='flex flex-col gap-2 '
+      >
+        {servers.map((server) => (
+      
+      <button
+      key={server.id}
+      onClick={() => setCurrentServer(server)}
+      className={`w-full justify-start items-start gap-2 flex
+         ${currentServer.id === server.id ? 
+          "bg-red-800" : "bg-gray-700"} px-3 py-2 rounded-md hover:bg-gray-800`}
+       >
+      {server.name}
+    </button>
+      ))}
+      </div>
+
+      <h1 className="text-3xl font-bold">{tvShow?.name}</h1>
+
       {/* Details */}
               <div className="flex gap-4 mt-3 text-gray-400"> 
                 <p className="text-red-500 font-semibold">
