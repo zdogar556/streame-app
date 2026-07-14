@@ -129,20 +129,25 @@ const [currentServer, setCurrentServer] = useState(servers[0])
 
       </div>
 
-      
+      <div 
+      className='flex flex-col gap-2 '
+      >
         {servers.map((server) => (
       
       <button
-      className='flex flex-col mt-3 w-full justify-start items-start px-3 py-2 bg-gray-800' 
-      
       key={server.id}
-      onClick={() => setCurrentServer(server)
-      
-      }
+      onClick={() => setCurrentServer(server)}
+      className={`w-full justify-start items-start gap-2 flex
+         ${currentServer.id === server.id ? 
+          "bg-red-800" : "bg-gray-700"} px-3 py-2 rounded-md hover:bg-gray-800`}
        >
       {server.name}
     </button>
       ))}
+      </div>
+
+      
+        
 
     
 
