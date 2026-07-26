@@ -2,19 +2,29 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { getTVDetails, getTVCredits } from '../movieApi'
+import { getTVDetails, getTVCredits, getTVShowEpisodesDetails,getTVSeasonDetails } from '../movieApi'
+
 
 const TvShowPlayer = () => {
 
     const { id } = useParams();
+    const { seasonNumber, season_number, episode_number } = useParams();
     const { season } = useParams();
     const { episode } = useParams();
+    
 
     const navigate=useNavigate();
 
     const [tvShow, setTvShow] = useState(null);
     const [cast , setCast] = useState([]);
     const [images , setImages] = useState([]);
+
+
+    const [selectedSeason, setSelectedSeason] = useState(1);
+    const [selectedEpisode, setSelectedEpisode] = useState(1);
+
+    const [seasonData, setSeasonData] = useState(null);
+    const [episodeData, setEpisodeData] = useState(null);
 
     const servers=[
         {
@@ -25,32 +35,32 @@ const TvShowPlayer = () => {
         {
             id:"vidfast",
             name:"vidfast (Multi - no ads)",
-            url:`https://vidfast.vc/tv/${id}`
+            url:`https://vidfast.vc/tv/${id}/${selectedSeason}/${selectedEpisode}`
         },
         {
             id:"yapgrid",
             name:"yapgrid (Multi - no ads)",
-            url:`https://yapgrid.com/embed/tv/${id}?autoplay=1`
+            url:`https://yapgrid.com/embed/tv/${id}/${selectedSeason}/${selectedEpisode}?autoplay=1`
         },
         {
             id:"cinesrc",
             name: "CineSrc (Multi-ads)",
-            url: `https://cinesrc.st/embed/tv/${id}`
+            url: `https://cinesrc.st/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`
         },
         {
             id :"peachify",
             name: "Peachify (Multi-ads)",
-            url: `https://peachify.pro/embed/tv/${id}`
+            url: `https://peachify.pro/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`
         },
         {
             id:"embedmaster",
             name: "EmbedMaster (Multi-ads)",
-            url: `https://embedmaster.link/tv/${id}`
+            url: `https://embedmaster.link/tv/${id}/${selectedSeason}/${selectedEpisode}`
          },
         {
             id:"vidking",
             name: "VidKing (Multi-ads)",
-            url: `https://www.vidking.net/embed/tv/${id}`
+            url: `https://www.vidking.net/embed/tv/${id}/${selectedSeason}/${selectedEpisode}`
         },
         
     ]
@@ -60,7 +70,7 @@ const TvShowPlayer = () => {
     useEffect(() => {
         getTVDetails(id)
         .then((res) => {
-          console.log(res.data);
+          console.log("tv details",res.data);
           setTvShow(res.data);
         })
         .catch((error) => {
@@ -78,6 +88,45 @@ const TvShowPlayer = () => {
         })  
     }, [id]);
 
+
+    useEffect(() => {
+
+    getTVSeasonDetails(id, selectedSeason)
+        .then((res)=>{
+            console.log("TVseason details",res.data);
+            setSeasonData(res.data);
+
+            // Automatically select Episode 1
+            setSelectedEpisode(1);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+
+}, [id, selectedSeason]);
+
+useEffect(() => {
+
+    getTVShowEpisodesDetails(
+        id,
+        selectedSeason,
+        selectedEpisode
+    ).then((res)=>{
+        console.log("TVepisode details",res.data);
+        setEpisodeData(res.data);
+    })
+    .catch((error)=>{
+        console.log(error);
+    })
+
+}, [id, selectedSeason, selectedEpisode]);
+
+useEffect(() => {
+  setCurrentServer(
+    servers.find(server => server.id === currentServer.id)
+  );
+}, [selectedSeason, selectedEpisode]);
+
     if(!tvShow) return(
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
       Loading...
@@ -87,19 +136,97 @@ const TvShowPlayer = () => {
     <div className='min-h-screen  min-w-screen bg-black text-white p-2'>
       TV Show Player
 
-
-      <div>
-    <iframe
+      <div className='flex gap-2 items-center mt-6'>
+        <div className='w-3/4'>
+        <iframe
       src={currentServer.url}
       width="100%"
       height="600"
       allowFullScreen
       />
-      <div>
-        
-      </div>
+      {console.log("Episode:", selectedEpisode)}
+        {console.log("Iframe:", currentServer.url)}
+      
+        </div>
+
+        <div className='w-1/4 h-screen bg-green-950 flex flex-col'>
+        <p className='m-2' >Season</p>
+            <div className='flex gap-0.5 flex-wrap'>
+                
+                {
+                    Array.from(
+                        { length: tvShow?.number_of_seasons || 0 },(_,i)=>
+                            (
+                                <button
+                                key={i+1}
+                                className={`${selectedSeason === i+1 ? "bg-red-800" : "bg-gray-700"} px-3 py-2 rounded-full m-2 hover:bg-gray-800 text-sm `}
+                                onClick={() => setSelectedSeason(i+1)}
+                                >
+                                    S{i+1}
+                                </button>
+                            )
+                        
+                    )
+                }
+            </div>
+
+            {/* Episodes playlist */}
+            <div className="mt-5 flex-1 overflow-y-auto flex flex-col gap-2 pr-2 ">
+
+                {
+                seasonData?.episodes?.map((ep)=>(
+                <button
+                key={ep.id}
+                onClick={()=>setSelectedEpisode(ep.episode_number)}
+                className={`text-left p-3 rounded m-1 
+
+                    ${
+                    selectedEpisode===ep.episode_number
+                    ?"bg-red-600"
+                    :"bg-zinc-800"
+                    }
+
+                        `}
+                        >
+                <div className='flex gap-2 ' >
+                    <div className="mr-2 w-48">
+                        <img 
+                        
+                        className='w-16 h-16 rounded object-cover ' src={`https://image.tmdb.org/t/p/w500/${ep.still_path}`} alt={ep.name} />
+                    </div>
+
+                    <div>
+                        <div className="font-semibold text-sm">
+
+                E{ep.episode_number} - {ep.name}
+
+                    </div>
+
+                    <div className="text-xs text-gray-400">
+
+                    {ep.runtime || "?"} min
+                    </div>
+
+                    {selectedEpisode === ep.episode_number ? (
+                    <div className="text-xs text-gray-400 mt-2 whitespace-pre-wrap">
+                     {ep.overview || "No overview available."}
+                        </div>
+                        ) : (
+                        <div className="text-xs text-gray-400 mt-2 line-clamp-2">
+                        {ep.overview || "No overview available."}
+                        </div>
+                        )}
+                    </div>
+                </div>
+                </button>
+                ))
+                }
+
+            </div>
+        </div>
 
       </div>
+
 
       
       <div 

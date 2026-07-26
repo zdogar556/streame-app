@@ -120,4 +120,11 @@ export const getTVImages=(id) => {
 export const getTVVideos=(id) => {
   return api.get(`/tv/${id}/videos?api_key=${KEY}`);
 };
-
+// TV Seasons
+export const getTVSeasonDetails = (id, seasonNumber) => {
+  return api.get(`/tv/${id}/season/${seasonNumber}?api_key=${KEY}`);
+};
+// TV EPISODE GROUPS
+export const getTVShowEpisodesDetails=(id,season_number,episode_number) => {
+  return api.get(`/tv/${id}/season/${season_number}/episode/${episode_number}?api_key=${KEY}`);
+};
