@@ -22,18 +22,21 @@ useEffect(() => {
       <h1 className='text-2xl font-bold p-4 '>
         Live Matches
       </h1>
-      <div className=' flex flex-wrap  gap-6  p-6 '>
+      <div className=' flex flex-wrap  gap-6  p-2 '>
         {
-        matches.map((match) => (   
+        matches.map((match, index) => (   
         <Link
+        key={`${match.id}-${index}`}
         to={`/sports/${match.id}`}
         state={{match}} > 
       <div
-       key={match.id}
        className="cursor-pointer bg-gray-800 w-72  rounded-xl p-0">
       <img
-        src={`https://streamed.pk${match.poster}`}
-        alt={match.title}
+  src={
+    match.poster
+      ? `https://streamed.pk${match.poster}`
+      : "/placeholder.png"
+  } alt={match.title}
         className="w-full h-36  rounded-xl"
       />
       <div className="p-4 ">

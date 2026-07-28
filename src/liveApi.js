@@ -8,7 +8,6 @@ export const getLiveMatches = () => {
   return liveApi.get("/matches/all");
 };
 
-export const getMatchStream=(source,id)=>{
-    return liveApi.get(`/stream/${source}/${id}`);
-
+export const getMatchStreams = (source, id) => {
+  return liveApi.get(`/stream/${source}/${id}`);
 };
