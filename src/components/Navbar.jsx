@@ -1,11 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
+
 
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const links = [
     {name:"Home", path:"/"},
@@ -29,6 +32,10 @@ const Navbar = () => {
         Streame <span 
         className="text-red-500">ZD</span>
       </h1>
+
+      <div>
+        
+      </div>
 
 
       {/* Links */}
@@ -54,6 +61,12 @@ const Navbar = () => {
 
           ))
         }
+
+        <div>
+          <Search 
+          onClick={()=>navigate("/search")}
+          />
+      </div>
         
       </div>
       {/* Mobile Links */}
@@ -91,6 +104,10 @@ const Navbar = () => {
         {link.name}
       </NavLink>
     ))}
+    <div className="px-6 py-3" >
+          <Search  /> 
+      </div>
+  
   </div>
 </div>
 

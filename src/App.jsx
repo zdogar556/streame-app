@@ -9,6 +9,7 @@ import TvShowPlayer from './Pages/TvShowPlayer'
 import LiveSports from './components/LiveSports'
 import MyList from './components/MyList'
 import LiveMatchPayer from './Pages/LiveMatchPlayer'
+import Search from './components/Search'
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/sports" element={<LiveSports />} />
         <Route path="/mylist" element={<MyList />} />
         <Route path="/sports/:id" element={<LiveMatchPayer />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   )
