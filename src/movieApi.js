@@ -128,3 +128,16 @@ export const getTVSeasonDetails = (id, seasonNumber) => {
 export const getTVShowEpisodesDetails=(id,season_number,episode_number) => {
   return api.get(`/tv/${id}/season/${season_number}/episode/${episode_number}?api_key=${KEY}`);
 };
+// Search Apis
+// Search All(Movies,TV Shows)
+export const searchMulti=(query)=>{
+  return api.get(`/search/multi?api_key=${KEY}&query=${query}`);
+};
+// search Movies
+export const searchMovies=(query)=>{
+  return api.get(`/search/movie?api_key=${KEY}&query=${query}`);
+};
+// search TV Shows
+export const searchTVShows=(query)=>{
+  return api.get(`/search/tv?api_key=${KEY}&query=${query}`);
+};
