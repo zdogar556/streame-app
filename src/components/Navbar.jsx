@@ -105,7 +105,8 @@ const Navbar = () => {
       </NavLink>
     ))}
     <div className="px-6 py-3" >
-          <Search  /> 
+          <Search 
+          onClick={()=>navigate("/search")} /> 
       </div>
   
   </div>
