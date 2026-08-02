@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { use } from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getTrendingMovies } from '../movieApi'
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MovieModal from './MovieModal'
@@ -10,6 +11,9 @@ const HerorSection = () => {
     const [currentIndex,setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
+
+    // navigate
+    const navigate=useNavigate();
 
   useEffect(() => {
     getTrendingMovies()
@@ -70,6 +74,7 @@ const movie=movies[currentIndex];
               <div 
               className="flex flex-wrap gap-3 mt-5 text-white">
                 <button 
+                onClick={()=>navigate(`/watch/movie/${movie.id}`)}
                 className="bg-red-700 px-6 py-3 rounded-full lg:w-48 " >
                   Watch
                   </button> 
