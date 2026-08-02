@@ -21,13 +21,6 @@ const Movies = () => {
         <TrendingMovie />
       </div>
       <div className='mt-8'>
-        <h1 className='text-xl font-bold text-white'>Popular Movies</h1>
-        <p
-        className='text-gray-400 mt-2 text-sm'
-        >
-          Most Watch Right Now</p>
-      </div>
-      <div>
         <PopularMovies />
       </div>
       <div>
