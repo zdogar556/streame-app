@@ -1,13 +1,30 @@
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useRef } from 'react'
 import { getPopularMovies } from '../movieApi'
 import MovieModal from './MovieModal'
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const PopularMovies = () => {
       const [movies, setMovies] = useState([]);
       const [selectedMovie, setSelectedMovie] = useState(null);
       const [isOpen, setIsOpen] = useState(false);
+
+      const scrollRef=useRef(null)
+
+      const moveRight=()=>{
+        scrollRef.current?.scrollBy({
+          left: 500,
+          behavior: 'smooth'
+        })
+      }
+      const moveLeft=()=>{
+        scrollRef.current?.scrollBy({
+          left: -500,
+          behavior: 'smooth'
+        })
+      }
     
      useEffect(() => {
     
@@ -29,14 +46,34 @@ const PopularMovies = () => {
       }, []);
   return (
         <div className=" mt-8 " >
-        <div className='mt-8'>
+          <div className='flex gap-2'>
+          <div >
         <h1 className='text-xl font-bold text-white'>Popular Movies</h1>
         <p
         className='text-gray-400 mt-2 text-sm'
         >
           Most-watched movies this week</p>
       </div>
+
+      <div className="flex items-center gap-2">
+        <button
+        
+        onClick={moveLeft}
+        className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+        >
+          <FaChevronLeft />
+        </button>
+        <button
+        onClick={moveRight}
+        className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+          </div>
+        
       <div
+      ref={scrollRef}
       className="flex overflow-x-auto gap-4 scrollbar-hide mt-3" 
       >
         {
