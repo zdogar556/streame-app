@@ -104,7 +104,7 @@ const [currentServer, setCurrentServer] = useState(servers[0])
 
   return (
     <div className='min-h-screen  min-w-screen bg-black text-white p-2 '>
-
+      <h1>Movie Player</h1>
       <div>
       <button className='text-gray-400'
       onClick={()=>{
@@ -116,10 +116,7 @@ const [currentServer, setCurrentServer] = useState(servers[0])
       </div>
 
 
-      <div>
-        
-      <h1>Movie Player</h1>
-
+      <div className='p-3 border border-gray-800 mt-2' >
       <iframe
       src={currentServer.url}
       width="100%"
@@ -130,7 +127,7 @@ const [currentServer, setCurrentServer] = useState(servers[0])
       </div>
 
       <div 
-      className='flex flex-col gap-2 '
+      className='flex flex-col gap-2 mt-3 '
       >
         {servers.map((server) => (
       
