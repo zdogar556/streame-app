@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { searchMovies, searchMulti, searchTVShows } from '../movieApi'
+import MovieModal from '../Pages/MovieModal'
+import TVShowModal from '../Pages/TvShowModal'
+import TvShowModal from '../Pages/TvShowModal'
 
 
 const Search = () => {
@@ -20,8 +22,16 @@ const Search = () => {
 
     const [loading,setLoading]=useState(false);
 
-    // navigate
-    const navigate=useNavigate();
+    // Selected move
+    const [selectedMovie, setSelectedMovie] = useState(null);
+    // Selected TV Show
+    const [selectedTVShow, setSelectedTVShow] = useState(null);
+    // Movie Modal
+    const [movieModalOpen, setMovieModalOpen] = useState(false);
+    // TV Modal
+    const [tvModalOpen, setTvModalOpen] = useState(false);
+
+ 
 
     useEffect(()=>{
         // check if query is empty
@@ -37,7 +47,7 @@ const Search = () => {
                 let res;
 
                 // SerachApi Call
-                if(typeFilter === "movie"){
+                if(typeFilter === "movies"){
                     res = await searchMovies(query);
                 } else if(typeFilter === "tv"){
                     res = await searchTVShows(query);
@@ -85,13 +95,15 @@ const Search = () => {
   }, [query, typeFilter, regionFilter]);
 
   const handleClick = (item) => {
-    if (
-      item.media_type === "tv" ||
-      typeFilter === "tv"
-    ) {
-      navigate(`/watch/tv-show/${item.id}`);
+    const isTV=
+    item.media_type === "tv" || 
+    (typeFilter === "tv" && !item.media_type);
+    if (isTV) {
+      setSelectedTVShow(item.id);
+      setTvModalOpen(true);
     } else {
-      navigate(`/watch/movie/${item.id}`);
+      setSelectedMovie(item.id);
+      setMovieModalOpen(true);
     }
   };
 
@@ -237,7 +249,22 @@ const Search = () => {
         ))}
 
       </div>
-      
+      <MovieModal
+      movieId={selectedMovie}
+      isOpen={movieModalOpen}
+      onClose={()=>{
+        setMovieModalOpen(false);
+        setSelectedMovie(null)
+      }}
+      />
+      <TvShowModal
+      tvId={selectedTVShow}
+      isOpen={tvModalOpen}
+      onClose={()=>{
+        setTvModalOpen(false);
+        setSelectedTVShow(null)
+      }}
+      />
     </div>
   )
 }
