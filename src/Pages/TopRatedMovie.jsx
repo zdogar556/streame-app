@@ -48,12 +48,12 @@ const TopRatedMovie = () => {
       <div className="flex items-center gap-2">
         <button 
         onClick={moveLeft}
-        className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"> 
+        className="w-8 h-8 rounded-full bg-[#08080cb3] text-white flex items-center justify-center hover:bg-gray-950 border"> 
           <FaChevronLeft />
         </button>
         <button
         onClick={moveRight}
-        className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+       className="w-8 h-8 rounded-full bg-[#08080cb3] text-white flex items-center justify-center hover:bg-gray-950 border"
         >
           <FaChevronRight />
         </button>
@@ -75,7 +75,7 @@ const TopRatedMovie = () => {
             }}
             >
               <img 
-              className='w-[180] h-72 object-cover rounded-xl'
+              className='w-[180] h-72 object-cover rounded-xl bg-gray-800'
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
               <h2
               className='text-white mt-2 truncate'
