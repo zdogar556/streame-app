@@ -136,7 +136,17 @@ useEffect(() => {
     <div className='min-h-screen  min-w-screen bg-black text-white p-2'>
       TV Show Player
 
-      <div className='flex gap-2 items-center mt-6'>
+      <div className='flex gap-2 items-center'>
+      <button className='text-gray-400'
+      onClick={()=>{
+        navigate("/tv-shows")
+      }}
+      >
+       ← Back to TV Shows
+      </button>
+      </div>
+
+      <div className='flex gap-2 items-center mt-6 '>
         <div className='w-3/4'>
         <iframe
       src={currentServer.url}
