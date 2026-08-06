@@ -6,6 +6,7 @@ import TVShowModal from '../Pages/TvShowModal'
 import TvShowModal from '../Pages/TvShowModal'
 
 
+
 const Search = () => {
     // Filters State
     const[typeFilter,SetTypeFilter]=useState("all");
@@ -95,13 +96,17 @@ const Search = () => {
   }, [query, typeFilter, regionFilter]);
 
   const handleClick = (item) => {
+    console.log(item);
     const isTV=
     item.media_type === "tv" || 
     (typeFilter === "tv" && !item.media_type);
+    console.log("Is TV:", isTV);
     if (isTV) {
+        console.log("Opening TV Modal", item.id);
       setSelectedTVShow(item.id);
       setTvModalOpen(true);
     } else {
+        console.log("Opening Movie Modal", item.id);
       setSelectedMovie(item.id);
       setMovieModalOpen(true);
     }
@@ -235,7 +240,7 @@ const Search = () => {
                   : "https://via.placeholder.com/500x750"
               }
               alt={item.title || item.name}
-              className="rounded-xl w-full object-cover transition group-hover:scale-105"
+              className="rounded-xl w-full object-cover bg-gray-800 transition group-hover:scale-105"
             />
 
             <h3 className="mt-2 font-semibold line-clamp-1">
@@ -258,7 +263,7 @@ const Search = () => {
       }}
       />
       <TvShowModal
-      tvId={selectedTVShow}
+      tvShowId={selectedTVShow}
       isOpen={tvModalOpen}
       onClose={()=>{
         setTvModalOpen(false);
