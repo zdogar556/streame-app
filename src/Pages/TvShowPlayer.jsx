@@ -67,6 +67,8 @@ const TvShowPlayer = () => {
 
     const [currentServer,setCurrentServer]=useState(servers[0]);
 
+    const [showServers, setShowServers] = useState(false);
+
     useEffect(() => {
         getTVDetails(id)
         .then((res) => {
@@ -126,6 +128,8 @@ useEffect(() => {
     servers.find(server => server.id === currentServer.id)
   );
 }, [selectedSeason, selectedEpisode]);
+
+    
 
     if(!tvShow) return(
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -237,11 +241,22 @@ useEffect(() => {
 
       </div>
 
-
-      
-      <div 
+      <div
+      className='mt-3 border border-gray-800 p-3 rounded-lg'
+      >
+        <button className='w-full px-4 py-2 rounded-md flex justify-between items-center'
+        onClick={()=>setShowServers(!showServers)}>
+          <div className='flex gap-2'>
+            <span>Source</span>
+            <span>{currentServer.name}</span>
+          </div>
+          <span>{showServers ? "-":"+"}</span>
+        </button>
+        {showServers &&(
+        <div 
       className='flex flex-col gap-2 '
       >
+  
         {servers.map((server) => (
       
       <button
@@ -249,12 +264,21 @@ useEffect(() => {
       onClick={() => setCurrentServer(server)}
       className={`w-full justify-start items-start gap-2 flex
          ${currentServer.id === server.id ? 
-          "bg-red-800" : "bg-gray-700"} px-3 py-2 rounded-md hover:bg-gray-800`}
+          "bg-red-900 border-l-8 border-red-600"  : "bg-gray-700"} px-3 py-2 rounded-md hover:bg-gray-800`}
        >
       {server.name}
     </button>
       ))}
       </div>
+
+      )
+
+      }
+      </div>
+
+
+      
+      
 
       <h1 className="text-3xl font-bold">{tvShow?.name}</h1>
 
