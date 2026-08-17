@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +12,10 @@ const MoviePlayer = () => {
   const [moiveProvider, setMoiveProvider] = useState([]);
   const [movie, setMovie] = useState(null);
   const [cast, setCast] = useState([]);
+
+  const [theaterMode,setTheaterMode]= useState(false);
+
+  const playerRef = useRef(null);
 
   const servers = [
   {
@@ -94,6 +98,17 @@ const [currentServer, setCurrentServer] = useState(servers[0]);
 
   },[id])
 
+
+  const handleFullScreen = () => {
+  if (playerRef.current.requestFullscreen) {
+    playerRef.current.requestFullscreen();
+  } else if (playerRef.current.webkitRequestFullscreen) {
+    playerRef.current.webkitRequestFullscreen();
+  } else if (playerRef.current.msRequestFullscreen) {
+    playerRef.current.msRequestFullscreen();
+  }
+};
+
   if (!movie) {
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -117,28 +132,41 @@ const [currentServer, setCurrentServer] = useState(servers[0]);
 
       {/* Player button */}
       <div className='flex gap-2 justify-end p-2 bg-gray-800 h-10 border border-gray-800 rounded-lg'>
+        {/* open new tab */}
         <button
+        onClick={()=>
+          window.open(currentServer.url,"_blank")}
         className='bg-black text-md px-4  rounded-full '
         >Open tab
         </button>
+        {/* theater */}
         <button
-        className='bg-black text-md px-4  rounded-full '
-        >Theater</button>
+        onClick={()=>setTheaterMode(!theaterMode)}
+        className={`' px-4  rounded-full '
+        ${theaterMode ? "text-red-600 bg-black " : "bg-black text-md "}`}
+
+        >{theaterMode ? "Exit Theater" : "Theater"}</button>
         <button
+        onClick={handleFullScreen}
         className='bg-black text-md px-4  rounded-full '
         >Fullscreen</button>
       </div>
 
 
-      <div className='p-3 border border-gray-800 rounded-lg' >
-      <iframe
-      src={currentServer.url}
-      width="100%"
-      height="600"
-      allowFullScreen
-      />
-
-      </div>
+      <div
+  className={`mx-auto transition-all duration-300 ${
+    theaterMode ? "max-w-screen-2xl" : "max-w-5xl"
+  }`}
+>
+  <iframe
+    ref={playerRef}
+    src={currentServer.url}
+    width="100%"
+    height={theaterMode ? "800" : "600"}
+    allowFullScreen
+    title="Movie Player"
+  />
+</div>
 
       <div 
       className='mt-3 border border-gray-800 p-3 rounded-lg'
