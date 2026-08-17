@@ -34,7 +34,7 @@ useEffect(() => {
 
   const interval=setInterval(()=>{
     setCurrentIndex((prev)=>(prev+1)% movies.length)
-  },60000);
+  },5000);
 
   return ()=>clearInterval(interval);
 },[movies]);
@@ -90,7 +90,7 @@ const movie=movies[currentIndex];
                   More Info
                   </button>
                 <button 
-                className='bg-gray-600 px-6  py-3 rounded-full'>
+                className='bg-gray-900 px-6  py-3 rounded-full'>
                   + My List
                   </button>
               </div>              
@@ -108,7 +108,7 @@ const movie=movies[currentIndex];
               className={`h-2 w-3 rounded-full transition-all ${
                 currentIndex === index
                   ? "bg-red-500 w-8"
-                  : "bg-gray-400 w-8"
+                  : "bg-gray-900 w-8"
               }`}
             />
           ))}
@@ -116,13 +116,13 @@ const movie=movies[currentIndex];
         <div 
         className="flex gap-2 justify-end  mr-4 w-48 mb-8 ">
           <button
-          className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+          className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-gray-700"
           onClick={()=> setCurrentIndex((prev)=>(prev-1 +movies.length)% movies.length)}
           >
             <FaChevronLeft />
           </button>
           <button
-          className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full bg-gray-600 text-white flex items-center justify-center hover:bg-gray-700"
+          className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-gray-700"
           onClick={()=> setCurrentIndex((prev)=>(prev+1)% movies.length)}
           >
             <FaChevronRight />
