@@ -163,7 +163,7 @@ useEffect(() => {
       
         </div>
 
-        <div className='w-1/4 h-screen bg-green-950 flex flex-col'>
+        <div className='w-1/4 h-screen border border-gray-800 flex flex-col'>
         <p className='m-2' >Season</p>
             <div className='flex gap-0.5 flex-wrap'>
                 
