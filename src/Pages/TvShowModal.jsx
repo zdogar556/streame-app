@@ -177,6 +177,7 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
                         className="w-full h-40 object-cover rounded-lg"
                       />
                       <div className="mt-2">{actor.name}</div>
+                      <div className="text-xs text-gray-400">{actor.character}</div>
                     </div>
                   ))}
                 </div>
