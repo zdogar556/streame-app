@@ -1,168 +1,233 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { getTrendingMovies } from "../movieApi";
-import MovieModal from "./MovieModal";
+import React, { useEffect } from 'react'
+import { useState } from 'react'
+import { getTVDetails, getTVCredits, getTVImages, getTVVideos } from '../movieApi'
+import { X } from "lucide-react";
+import {Play} from "lucide-react";
+import { Plus } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
-const TrendingMovie = () => {
-  const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const scrollRef = useRef(null);
+const TvShowModal = ({tvShowId , isOpen, onClose}) => {
+  const [tvShow, setTvShow] = useState(null);
+  const [cast , setCast] = useState([]);
+  const [images , setImages] = useState([]);
+  const [trailer , setTrailer] = useState(null);
 
-  const moveRight = () => {
-    scrollRef.current?.scrollBy({
-      left: 500,
-      behavior: "smooth",
-    });
-  };
+  const navigate = useNavigate();
 
-  const moveLeft = () => {
-    scrollRef.current?.scrollBy({
-      left: -500,
-      behavior: "smooth",
-    });
-  };
+  useEffect(()=>{
+    if(!isOpen) return;
+    setTvShow(null);
+    setCast([]);
+    setImages([]);
+    setTrailer(null);
 
-  useEffect(() => {
-    getTrendingMovies()
-      .then((res) => {
-        setMovies(res.data.results);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  return (
-    <div className="mt-8 w-full px-3 sm:px-4 md:px-6 lg:px-8">
+    // Get TVShow Details
+    getTVDetails(tvShowId)
+    .then((res) => {
       
-      {/* Header */}
-      <div className="flex items-center justify-between gap-3 mb-3">
-        
-        <h1 className="text-xl sm:text-2xl font-bold text-white whitespace-nowrap">
-          Trending Movies
-        </h1>
+      setTvShow(res.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 
-        {/* Buttons */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={moveLeft}
-            className="
-              w-8 h-8
-              sm:w-9 sm:h-9
-              rounded-full
-              bg-[#08080cb3]
-              text-white
-              flex items-center justify-center
-              hover:bg-gray-950
-              border border-gray-700
-              transition
-            "
-          >
-            <FaChevronLeft className="text-sm sm:text-base" />
-          </button>
+    // Get TVShow Cast
+    getTVCredits(tvShowId)
+    .then((res) => {
 
-          <button
-            onClick={moveRight}
-            className="
-              w-8 h-8
-              sm:w-9 sm:h-9
-              rounded-full
-              bg-[#08080cb3]
-              text-white
-              flex items-center justify-center
-              hover:bg-gray-950
-              border border-gray-700
-              transition
-            "
-          >
-            <FaChevronRight className="text-sm sm:text-base" />
-          </button>
-        </div>
-      </div>
+      setCast(res.data.cast);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 
-      {/* Movie Slider */}
+    // get TVShow Images
+
+    getTVImages(tvShowId)
+    .then((res) => {
+      console.log("TV Show Images",res.data.backdrops);
+      setImages(res.data.backdrops);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+
+    // get TVShow Videos
+
+
+    getTVVideos(tvShowId)
+    .then((res) => {
+      console.log("TVShow Vedio",res.data.results);
+      const trailer = res.data.results.find((video) => video.type === "Trailer");
+      setTrailer(trailer);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    
+  },[tvShowId,isOpen])
+
+  if (!isOpen) return null;
+  return (
+    <div
+     className="fixed inset-0 bg-black/80 flex justify-center items-center"
+      onClick={onClose}
+     >
       <div
-        ref={scrollRef}
-        className="
-          flex
-          flex-nowrap
-          overflow-x-auto
-          overflow-y-hidden
-          gap-3
-          sm:gap-4
-          pb-2
-          scrollbar-hide
-          scroll-smooth
-        "
+      className="bg-zinc-900 text-white w-[90%] max-w-4xl rounded-xl overflow-y-auto max-h-[90vh]"
+      onClick={(e) => e.stopPropagation()}
       >
-        {movies.map((movie) => (
-          <div
-            key={movie.id}
-            className="
-              flex-none
-              w-[130px]
-              sm:w-[150px]
-              md:w-[170px]
-              lg:w-[180px]
-              cursor-pointer
-              group
-            "
-            onClick={() => {
-              setSelectedMovie(movie.id);
-              setIsOpen(true);
-            }}
-          >
-            {/* Poster */}
+        {tvShow && (
+          <>
+          <div className="relative">
             <img
-              className="
-                w-full
-                aspect-[2/3]
-                object-cover
-                rounded-xl
-                bg-gray-800
-                transition
-                duration-300
-                group-hover:scale-[1.03]
-              "
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt={movie.title}
-              loading="lazy"
+              src={`https://image.tmdb.org/t/p/original/${tvShow.backdrop_path}`}
+              alt={tvShow.name}
+              className="w-full h-72 object-cover"
             />
+              <div className="absolute bottom-4 left-4 flex gap-2">
+                    <button
+                    onClick={()=>{
+                      navigate(`/watch/tv-show/${tvShowId}`);
+                    }}
+                    className="bg-red-600 w-12 h-12 px-3 py-2 rounded-full" >
+                    <Play 
+                    className=" fill-white stroke-white"  />
+                    </button>
+                    <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
+                    <Plus /></button>
+                    </div>
+                    <button
+                    className="absolute top-4 right-4 bg-black p-2 rounded-full"
+                    onClick={onClose}
+                    >
+                    <X />
+                    </button>
 
-            {/* Movie Info */}
-            <div className="mt-2">
-              <h2
-                className="
-                  text-white
-                  text-sm
-                  sm:text-base
-                  font-medium
-                  truncate
-                "
-              >
-                {movie.title}
-              </h2>
-
-              <p className="text-gray-500 text-xs sm:text-sm">
-                {movie.release_date
-                  ? new Date(movie.release_date).getFullYear()
-                  : "N/A"}
-              </p>
-            </div>
           </div>
-        ))}
+    
+            <div className="p-8">
+              <h1 className="text-3xl font-bold">{tvShow.name}</h1>
+
+              {/* Details */}
+              <div className="flex gap-4 mt-3 text-gray-400"> 
+                <p className="text-red-500 font-semibold">
+                {Math.round(tvShow.vote_average * 10) }% Match
+              </p>
+              <p>
+                  {tvShow.first_air_date
+                    ? new Date(tvShow.first_air_date).getFullYear()
+                    : "N/A"}
+                </p>
+
+                <p>
+                  {tvShow.number_of_seasons} Seasons
+                  
+                  </p>
+                <p>
+                  
+                  {tvShow.number_of_episodes} Episodes
+                  </p>
+              </div>
+
+              
+              {/* Genres */}
+              <div className="flex gap-2 flex-wrap mt-2">
+                {
+                tvShow.genres.map((genre) => (
+                  <span key={genre.id}
+                  className="bg-gray-800 px-3 py-1 rounded-full"
+                  >{genre.name}</span>
+                ))
+                }
+              </div>
+
+              {/* Production Companies */}
+              <div  className="flex gap-2 flex-wrap mt-2">
+                {
+                tvShow.production_companies.map((company) => (
+                  <div
+                  key={company.id}>
+                    <img src={`https://image.tmdb.org/t/p/w500/${company.logo_path}`} alt={company.name} 
+                    className='w-20 h-16 rounded-xl'
+                    />
+                  </div>
+                ))
+                }
+              </div>
+              <p className="mt-4">{tvShow.overview}</p>
+
+                {/* Cast */}
+              <div className="mt-4">
+                <h2 className="text-xl font-bold">Cast</h2>
+
+                <div className="flex gap-4 overflow-x-auto scrollbar-hide  ">
+                  {cast.map((actor) => (
+                    <div key={actor.id}
+                    className="min-w-[120px]"
+                    >
+                      <img
+                        src={
+                        actor.profile_path
+                          ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                          : "https://via.placeholder.com/185x278?text=No+Image"
+                      }
+                      alt={actor.name}
+                        className="w-full h-40 object-cover rounded-lg"
+                      />
+                      <div className="mt-2">{actor.name}</div>
+                      <div className="text-xs text-gray-400">{actor.character}</div>
+                    </div>
+                  ))}
+                </div>
+
+                
+                {/* trailer */}
+                  <h2 className="text-2xl font-bold mt-8 mb-4">Vedio</h2>
+                  <div>
+                {trailer && (
+                  <iframe
+                   width="100%"
+                     height="315"
+                    src={`https://www.youtube.com/embed/${trailer.key}`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                  )}
+              
+
+              {/* images */}
+            
+                <h2 className="text-2xl font-bold mt-8 mb-4">Images</h2>
+                <div className="flex gap-4  overflow-x-auto scrollbar-hide">
+                  {images.map((image) => (
+                    <img
+                      key={image.file_path}
+                      src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                      alt={image.file_path}
+                      className="w-full h-40 object-cover rounded-lg"
+                    />
+                  ))}
+                </div>
+              
+
+                </div>
+              </div>
+            </div>
+
+            
+          </>
+        )
+          
+        }
+
       </div>
-
-      {/* Modal */}
-      <MovieModal
-        movieId={selectedMovie}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      
     </div>
-  );
-};
+  )
+}
 
-export default TrendingMovie;
+export default TvShowModal
