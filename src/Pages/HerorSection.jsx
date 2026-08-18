@@ -47,6 +47,27 @@ if(movies.length===0){
    
 const movie=movies[currentIndex];
 
+
+
+  const addToMyList = (movie) =>{
+    const existingList =
+    JSON.parse(localStorage.getItem("myList")) || [];
+
+    const alreadyExists = existingList.some(
+      (item)=> item.id===movie.id
+    );
+    if(alreadyExists){
+      alert("Movie already exists in your list");
+      return; 
+    }
+    const updateList = [...existingList, movie];
+
+    localStorage.setItem(
+      "myList",
+      JSON.stringify(updateList)
+    );
+  };
+
   return (
           <div
             key={movie.id}
@@ -90,6 +111,7 @@ const movie=movies[currentIndex];
                   More Info
                   </button>
                 <button 
+                onClick={()=>addToMyList(movie)}
                 className='bg-gray-900 px-6  py-3 rounded-full'>
                   + My List
                   </button>
