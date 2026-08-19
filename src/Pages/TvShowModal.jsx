@@ -68,6 +68,29 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
     
   },[tvShowId,isOpen])
 
+  const addToMyList = (tvShow) => {
+  const existingList =
+    JSON.parse(localStorage.getItem("myList")) || [];
+
+  const alreadyExists = existingList.some(
+    (item) => item.id === tvShow.id
+  );
+
+  if (alreadyExists) {
+    alert("TV Show is already in My List");
+    return;
+  }
+
+  const updatedList = [...existingList, tvShow];
+
+  localStorage.setItem(
+    "myList",
+    JSON.stringify(updatedList)
+  );
+
+  alert("TV Show added to My List");
+};
+
   if (!isOpen) return null;
   return (
     <div
@@ -95,7 +118,9 @@ const TvShowModal = ({tvShowId , isOpen, onClose}) => {
                     <Play 
                     className=" fill-white stroke-white"  />
                     </button>
-                    <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
+                    <button 
+                    onClick={() => addToMyList(tvShow)}
+                    className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
                     <Plus /></button>
                     </div>
                     <button
