@@ -67,6 +67,24 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
 
   }, [movieId, isOpen]);
 
+  const addToMyList = (movie) => {
+    const existingList =
+      JSON.parse(localStorage.getItem("myList"))  || [];
+    
+      const alreadyExists = existingList.some(
+        (item) => item.id === movie.id
+      );
+      if (alreadyExists) {
+        alert("Movie already exists in your list");
+        return;
+      }
+      const updateList = [...existingList, movie];
+    
+      localStorage.setItem(
+        "myList",
+        JSON.stringify(updateList)
+      );
+  }
   if (!isOpen) return null;
 
   return (
@@ -95,7 +113,9 @@ const MovieModal = ({ movieId, isOpen, onClose }) => {
                   <Play 
                   className=" fill-white stroke-white"  />
                   </button>
-                 <button className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
+                 <button 
+                 onClick={()=>addToMyList(movie)}
+                 className="bg-gray-600 w-12 h-12 px-3 py-2 rounded-full" >
                   <Plus /></button>
               </div>
               <button
